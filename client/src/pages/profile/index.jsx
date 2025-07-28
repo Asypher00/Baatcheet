@@ -26,8 +26,8 @@ const Profile = () => {
             setLastName(userInfo.lastName);
             setSelectedColor(userInfo.color);
         }
-        if(userInfo.image){
-            setImage(`${HOST}/${userInfo.image}`) ; 
+        if (userInfo.image) {
+            setImage(`${HOST}/${userInfo.image}`);
         }
     }, [userInfo])
     const validateProfile = () => {
@@ -83,32 +83,32 @@ const Profile = () => {
     }
 
     const handleImageChange = async (e) => {
-        const file = e.target.files[0]; 
-        console.log(file) ; 
-        const formData = new FormData ; 
+        const file = e.target.files[0];
+        console.log(file);
+        const formData = new FormData;
         formData.append("profile-image", file)
         const res = await apiClient.post(ADD_PROFILE_IMAGE_ROUTE, formData, {
             withCredentials: true,
-        }) ; 
-        if(res.status === 200 && res.data.data.image){
-            setUserInfo({...userInfo, image: res.data.data.image}) ; 
-            toast.success("Profile Image Updated Successfully") ; 
+        });
+        if (res.status === 200 && res.data.data.image) {
+            setUserInfo({ ...userInfo, image: res.data.data.image });
+            toast.success("Profile Image Updated Successfully");
         }
     }
 
     const handleDeleteImage = async () => {
         try {
-            const res = await apiClient.delete(REMOVE_PROFILE_IMAGE_ROUTE,{
+            const res = await apiClient.delete(REMOVE_PROFILE_IMAGE_ROUTE, {
                 withCredentials: true,
-            }) ; 
-            if(res.status === 200){
-                setUserInfo({...userInfo, image: null}) ; 
-                toast.success("Profile Image Deleted Successfully") ; 
-                setImage(null) ; 
+            });
+            if (res.status === 200) {
+                setUserInfo({ ...userInfo, image: null });
+                toast.success("Profile Image Deleted Successfully");
+                setImage(null);
             }
         } catch (error) {
-            console.log({error}) ; 
-            toast.error("Something went wrong") ; 
+            console.log({ error });
+            toast.error("Something went wrong");
         }
     }
     return (

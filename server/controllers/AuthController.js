@@ -117,7 +117,7 @@ const login = async (req, res, next) => {
 const getUserInfo = async (req, res, next) => {
     try {
         if (req.user.id) {
-            const user = await User.findById(req.userId);
+            const user = await User.findById(req.user.id);
             if (user) {
                 return res.status(200).json({
                     success: true,
@@ -269,21 +269,18 @@ const removeProfileImage = async (req, res, next) => {
                 success: false,
                 message: "User not found.",
             });
-
-            if (user.image) {
-                unlinkSync(user.image);
-            }
-
-            user.image = null;
-            await user.save();
-
-            return res
-                .status(200)
-                .json({
-                    success: true,
-                    message: "Profile image removed successfully."
-                });
         }
+        if (user.image) {
+            unlinkSync(user.image);
+        }
+
+        user.image = null;
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Profile image removed successfully."
+        });
     } catch (error) {
         console.log({
             error
