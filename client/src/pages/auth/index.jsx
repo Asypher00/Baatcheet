@@ -83,7 +83,7 @@ const Auth = () => {
                     setUserInfo(response.data.data) ; 
                 }
                 if (response.data.data.id) {
-                    if (response.data.profileSetup){
+                    if (response.data.data.profileSetup){
                         navigate("/chat") ; 
                     } else{
                         navigate("/profile") ; 

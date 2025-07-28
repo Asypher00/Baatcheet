@@ -116,8 +116,8 @@ const login = async (req, res, next) => {
 
 const getUserInfo = async (req, res, next) => {
     try {
-        if (req.id) {
-            const user = await User.findById(request.userId);
+        if (req.user.id) {
+            const user = await User.findById(req.userId);
             if (user) {
                 return res.status(200).json({
                     success: true,
@@ -262,7 +262,7 @@ const removeProfileImage = async (req, res, next) => {
             });
         }
 
-        const user = await User.findById(userId);
+        const user = await User.findById(req.user.id);
 
         if (!user) {
             return res.status(404).json({
