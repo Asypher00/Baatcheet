@@ -21,15 +21,6 @@ app.use("/uploads/profiles", express.static("uploads/profiles")) ;
 app.use(cookieParser());
 app.use(express.json()) ; 
 
-// Add this to your server.js after the middleware setup
-app.get('/', (req, res) => {
-    res.json({ message: 'Server is working!' });
-});
-
-app.get('/api/test', (req, res) => {
-    res.json({ message: 'API routes are working!' });
-});
-
 app.use("/api/auth", authRoutes); 
 const start = async() => {
     try {

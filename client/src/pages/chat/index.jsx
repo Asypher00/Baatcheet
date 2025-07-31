@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useAppStore } from "../../store/index";
-
+import ContactsContainer from "./contacts-container/index";
+import EmptyChatContainer from "./empty-chat-container/index";
+import ChatContainer from "./chat-container/index";
 
 const Chat = () => {
 
@@ -17,7 +19,9 @@ const Chat = () => {
     }, [userInfo, navigate]);
     return (
         <div>
-            Chat
+            <ContactsContainer />
+            <ChatContainer />
+            <EmptyChatContainer />
         </div>
     )
 }

@@ -11,12 +11,16 @@ const {
 const {
     verifyToken
 } = require("../middlewares/AuthMiddleware");
-const multer = require("multer") ; 
-const upload = multer({dest: "uploads/profiles/"}) ; 
+const multer = require("multer");
+const { compare } = require("bcrypt");
+
+const upload = multer({dest: "uploads/profiles/"});
+
 authRoutes.post("/signup", signup);
 authRoutes.post("/login", login);
 authRoutes.get("/userInfo", verifyToken, getUserInfo);
-authRoutes.post("/update-profile", verifyToken, updateProfile)
+authRoutes.post("/update-profile", verifyToken, updateProfile);
 authRoutes.post("/add-profile-image", verifyToken, upload.single("profile-image"), addProfileImage);
-authRoutes.delete("/remove-profile-image", verifyToken, removeProfileImage) ; 
+authRoutes.delete("/remove-profile-image", verifyToken, removeProfileImage);
+
 module.exports = authRoutes;

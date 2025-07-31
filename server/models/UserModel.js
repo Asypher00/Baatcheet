@@ -54,8 +54,16 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre("save", async function (next) {
+    // Only hash the password if it has been modified (or is new)
+    if (!this.isModified('password')) return next();
+    
+    // Don't hash if it's already a bcrypt hash
+    if (this.password.match(/^\$2[ayb]\$.{56}$/)) return next();
+    
+    console.log("Hashing password for user:", this.email);
     const salt = await genSalt(10);
     this.password = await hash(this.password, salt);
+    console.log("Password hashed successfully");
     next();
 });
 
@@ -74,8 +82,21 @@ UserSchema.methods.createJWT = function () {
 }
 
 UserSchema.methods.comparePassword = async function (userPassword) {
-    const isMatch = await compare(this.password, userPassword);
-    return isMatch;
+    if (!userPassword || !this.password) {
+        console.log("Missing password or hash!");
+        return false;
+    }
+    
+    try {
+        console.log("About to call bcrypt compare...");
+        const isMatch = await compare(userPassword, this.password);
+        console.log("Bcrypt compare completed, result:", isMatch);
+        return isMatch;
+    } catch (error) {
+        console.error("Error in comparePassword:", error);
+        console.error("Error stack:", error.stack);
+        return false;
+    }
 }
 
 const User = mongoose.model("Users", UserSchema);

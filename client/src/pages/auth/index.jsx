@@ -14,7 +14,7 @@ const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const { setUserInfo } = useAppStore() ; 
+    const { setUserInfo } = useAppStore();
     const navigate = useNavigate();
     const validateSignup = () => {
         if (!email.length) {
@@ -52,10 +52,15 @@ const Auth = () => {
                 }, {
                     withCredentials: true,
                 });
+                console.log("Signup response:", response);
+
                 if (response.status === 201) {
                     toast.success("Account created successfully. Please login.");
-                    setUserInfo(response.data.data) ; 
-                    navigate("/profile") ; 
+                    setUserInfo(response.data.data);
+                    navigate("/profile");
+                    setEmail("");
+                    setPassword("");
+                    setConfirmPassword("");
                 }
             } catch (error) {
                 console.log({ error })
@@ -64,9 +69,6 @@ const Auth = () => {
         } else {
             toast.error("Validation failed");
         }
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
     }
 
     const handleLogin = async () => {
@@ -78,19 +80,20 @@ const Auth = () => {
                 }, {
                     withCredentials: true,
                 });
+                console.log("Login response:", response);
                 if (response.status === 200) {
                     toast.success("Account Logged into successfully");
-                    setUserInfo(response.data.data) ; 
+                    setUserInfo(response.data.data);
                 }
                 if (response.data.data.id) {
-                    if (response.data.data.profileSetup){
-                        navigate("/chat") ; 
-                    } else{
-                        navigate("/profile") ; 
+                    if (response.data.data.profileSetup) {
+                        navigate("/chat");
+                    } else {
+                        navigate("/profile");
                     }
                 }
             } catch (error) {
-                console.log( { error })
+                console.log({ error })
                 toast.error("An error occurred. Please try again.");
             }
         } else {
@@ -113,7 +116,7 @@ const Auth = () => {
                         <p className="font-medium text-center">Fill in the details to get started with Baatcheet</p>
                     </div>
                     <div className="flex items-center justify-center w-full">
-                        <Tabs className="w-3/4" defaultValue = "login">
+                        <Tabs className="w-3/4" defaultValue="login">
                             <TabsList className="bg-transparent rounded-none w-full">
                                 <TabsTrigger className="data-[state=active]:bg-transparent text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 p-3 transition-all duration-300 " value="login">Login</TabsTrigger>
                                 <TabsTrigger className="data-[state=active]:bg-transparent text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 p-3 transition-all duration-300 " value="signup">Signup</TabsTrigger>
