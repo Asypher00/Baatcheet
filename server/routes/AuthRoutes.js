@@ -6,7 +6,8 @@ const {
     getUserInfo,
     updateProfile,
     addProfileImage,
-    removeProfileImage
+    removeProfileImage,
+    logout
 } = require("../controllers/AuthController");
 const {
     verifyToken
@@ -22,5 +23,5 @@ authRoutes.get("/userInfo", verifyToken, getUserInfo);
 authRoutes.post("/update-profile", verifyToken, updateProfile);
 authRoutes.post("/add-profile-image", verifyToken, upload.single("profile-image"), addProfileImage);
 authRoutes.delete("/remove-profile-image", verifyToken, removeProfileImage);
-
+authRoutes.post("/logout", logout) ; 
 module.exports = authRoutes;

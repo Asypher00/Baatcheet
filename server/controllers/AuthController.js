@@ -154,15 +154,6 @@ const getUserInfo = async (req, res, next) => {
     }
 };
 
-// export const logout = async (request, response, next) => {
-//   try {
-//     response.cookie("jwt", "", { maxAge: 1, secure: true, sameSite: "None" });
-//     return response.status(200).send("Logout successful");
-//   } catch (err) {
-//     return response.status(500).send("Internal Server Error");
-//   }
-// };
-
 const updateProfile = async (req, res, next) => {
     try {
         const {
@@ -292,11 +283,34 @@ const removeProfileImage = async (req, res, next) => {
     }
 };
 
+const logout = async (req, res, next) => {
+    try {
+       res.cookie("jwt", "", {
+        maxAge: 1,
+        secure: true,
+        sameSite: "None",
+       })
+       res.status(200).json({
+        success: true,
+        message: "Logged out successfully",
+       }); 
+    } catch (error) {
+        console.log({
+            error
+        });
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+        });
+    }
+};
+
 module.exports = {
     signup,
     login,
     getUserInfo,
     updateProfile,
     addProfileImage,
-    removeProfileImage
+    removeProfileImage,
+    logout
 };

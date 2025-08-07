@@ -18,9 +18,9 @@ const Chat = () => {
         }
     }, [userInfo, navigate]);
     return (
-        <div className="flex h-[100vh] text-white overflow-hidden">
+        <div className="flex h-[100vh] text-white overflow-hidden coming-soon-regular">
             <ContactsContainer />
-            <EmptyChatContainer />
+            {/* <EmptyChatContainer /> */}
             <ChatContainer />
         </div>
     )
