@@ -21,7 +21,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAppStore } from "../../../../../store";
 const NewDm = () => {
-    const [openNewContactModal, setOpenNewContactModal] = useState("false");
+    const [openNewContactModal, setOpenNewContactModal] = useState(false);
     const [searchedContacts, setSearchedContacts] = useState([]);
     const { setSelectedChatType, setSelectedChatData } = useAppStore() ; 
     const searchContacts = async (contact) => {
