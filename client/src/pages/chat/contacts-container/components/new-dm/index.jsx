@@ -19,9 +19,11 @@ import { apiClient } from "../../../../../lib/api-client";
 import { SEARCH_CONTACTS_ROUTE, HOST } from "../../../../../utils/constants";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useAppStore } from "../../../../../store";
 const NewDm = () => {
     const [openNewContactModal, setOpenNewContactModal] = useState("false");
     const [searchedContacts, setSearchedContacts] = useState([]);
+    const { setSelectedChatType, setSelectedChatData } = useAppStore() ; 
     const searchContacts = async (contact) => {
         try {
             if (contact.length > 0) {
@@ -42,9 +44,10 @@ const NewDm = () => {
     }
 
     const selectNewContact = (contact) => {
+        setSelectedChatType("contact") ; 
+        setSelectedChatData(contact) ; 
         setOpenNewContactModal(false);
         setSearchedContacts([]);
-        console.log({ contact })
     }
     return (
         <>
